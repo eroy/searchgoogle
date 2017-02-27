@@ -1,12 +1,14 @@
 package com.example.searchgoogle.ui;
 
 import android.os.Bundle;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.Button;
 
 import com.example.searchgoogle.App;
 import com.example.searchgoogle.R;
+import com.example.searchgoogle.adapter.ViewPagerAdapter;
 import com.example.searchgoogle.api.ImageService;
 import com.example.searchgoogle.constant.ApiConstant;
 
@@ -16,22 +18,26 @@ import rx.schedulers.Schedulers;
 
 
 public class MainActivity extends AppCompatActivity {
-    Button btnGetTest;
+
+    private ViewPager viewPager;
+    private PagerAdapter pagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btnGetTest = (Button) findViewById(R.id.btn_get_test);
+        initView();
 
-        btnGetTest.setOnClickListener(v -> {
-
-            getImage("baby");
-
-        });
 
     }
+
+    private void initView() {
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(pagerAdapter);
+    }
+
     private void getImage(String search) {
         ImageService imageService = App.getApiManager().getImageService();
 
