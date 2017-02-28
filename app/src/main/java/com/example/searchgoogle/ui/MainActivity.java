@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import com.example.searchgoogle.App;
@@ -21,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
     private PagerAdapter pagerAdapter;
-
+    private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,25 +35,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView() {
         viewPager = (ViewPager) findViewById(R.id.pager);
+        toolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
+        setSupportActionBar(toolbar);
         pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(pagerAdapter);
     }
 
-    private void getImage(String search) {
-        ImageService imageService = App.getApiManager().getImageService();
 
-        imageService.getImages(ApiConstant.KEY,ApiConstant.CX,search,11)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .flatMap(imageResponse -> Observable.just(imageResponse.getImageModel()))
-                .subscribe(imageModel -> {
-
-                    Log.e("TTTTT", imageModel.get(0).getTitle());
-                }, throwable -> {
-                    Log.e("TTTTT-error", throwable.getMessage());
-                });
-
-
-    }
 
 }
