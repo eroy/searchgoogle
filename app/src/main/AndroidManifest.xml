@@ -13,7 +13,9 @@
         android:name="com.example.searchgoogle.App"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.searchgoogle.ui.MainActivity">
+        <activity
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:name="com.example.searchgoogle.ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

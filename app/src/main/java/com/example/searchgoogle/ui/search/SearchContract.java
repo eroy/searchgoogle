@@ -27,6 +27,9 @@ public interface SearchContract {
 
     interface View {
 
+        void showProgressBar();
+        void hideProgressBar();
+
         boolean isOnline();
         void addModel(List<ImageModel> list);
         void clearList();

@@ -36,6 +36,8 @@ public class SearchPresenter implements SearchContract.Presenter {
     public void getImage(String query, int start) {
         if (view.isOnline()) {
             model.getImage(query, start)
+                    .doOnRequest(request -> view.showProgressBar())
+                    .doOnUnsubscribe(() -> view.hideProgressBar())
                     .retry(3)
                     .flatMap(imageResponse -> Observable.just(imageResponse.getImageModel()))
                     .subscribe(imageModels -> {

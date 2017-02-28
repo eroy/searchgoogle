@@ -3,18 +3,19 @@ package com.example.searchgoogle.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.example.searchgoogle.ui.favourite.FavouriteFragment;
 import com.example.searchgoogle.ui.search.SearchFragment;
 
 
-public class ViewPagerAdapter extends FragmentPagerAdapter {
+public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     static final int PAGE_COUNT = 2;
 
     public ViewPagerAdapter(FragmentManager fm) {
         super(fm);
     }
+
 
     @Override
     public CharSequence getPageTitle(int position) {

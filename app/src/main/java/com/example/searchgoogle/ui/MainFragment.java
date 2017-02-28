@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import com.example.searchgoogle.R;
 import com.example.searchgoogle.adapter.ViewPagerAdapter;
 
+import static com.example.searchgoogle.R.id.pager;
+
 
 public class MainFragment extends BaseFragment {
     private ViewPager viewPager;
@@ -44,11 +46,15 @@ public class MainFragment extends BaseFragment {
 
 
     private void initView(View view) {
-        viewPager = (ViewPager) view.findViewById(R.id.pager);
+        viewPager = (ViewPager) view.findViewById(pager);
+        viewPager.setOffscreenPageLimit(0);
         toolbar = (Toolbar) view.findViewById(R.id.toolbar_actionbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         pagerAdapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
         viewPager.setAdapter(pagerAdapter);
+
+
+
     }
 
 

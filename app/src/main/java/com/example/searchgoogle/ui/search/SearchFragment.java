@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.searchgoogle.R;
 import com.example.searchgoogle.api.model.ImageModel;
@@ -24,6 +25,7 @@ import java.util.List;
 public class SearchFragment extends BaseFragment implements SearchContract.View {
 
     private SearchContract.Presenter presenter;
+    private ProgressBar progressBar;
 
     private RecyclerView recyclerView;
 
@@ -45,6 +47,7 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_search);
+        progressBar = (ProgressBar) view.findViewById(R.id.progressbar);
         presenter = new SearchPresenter(this);
         initAdapter();
 
@@ -121,5 +124,13 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
     }
 
 
+    @Override
+    public void showProgressBar() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
 
+    @Override
+    public void hideProgressBar() {
+        progressBar.setVisibility(View.GONE);
+    }
 }
