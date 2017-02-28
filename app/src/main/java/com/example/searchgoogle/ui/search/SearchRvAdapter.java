@@ -62,7 +62,7 @@ public class SearchRvAdapter extends RecyclerView.Adapter<SearchRvAdapter.ViewHo
         return list.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView mImageView;
         TextView mName;

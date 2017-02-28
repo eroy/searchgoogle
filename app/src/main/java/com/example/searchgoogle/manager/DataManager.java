@@ -24,8 +24,18 @@ public class DataManager {
     }
 
     public void removeData(DataModel dataModel) {
-        RealmResults<DataModel> results = realm.where(DataModel.class).equalTo("id",dataModel.getId()).findAll();
-        realm.executeTransaction(realm1 -> results.deleteAllFromRealm());
+        long id = dataModel.getId();
+        realm.executeTransaction(realm1 -> {
+            RealmResults<DataModel> results = realm.where(DataModel.class).equalTo("id", id).findAll();
+            results.deleteAllFromRealm();
+        });
+    }
+
+    public void removeDataById(long id) {
+        realm.executeTransaction(realm1 -> {
+            RealmResults<DataModel> results = realm.where(DataModel.class).equalTo("id", id).findAll();
+            results.deleteAllFromRealm();
+        });
     }
 
 }

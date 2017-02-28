@@ -4,7 +4,6 @@ package com.example.searchgoogle.ui.search;
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -18,7 +17,6 @@ import android.view.ViewGroup;
 import com.example.searchgoogle.R;
 import com.example.searchgoogle.api.model.ImageModel;
 import com.example.searchgoogle.ui.BaseFragment;
-import com.example.searchgoogle.ui.FullScreenImageFragment;
 import com.example.searchgoogle.util.Network;
 
 import java.util.List;
@@ -119,8 +117,7 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
 
     @Override
     public void gotToFullScreenImage(String url) {
-        DialogFragment fullScreenImageFragment = new FullScreenImageFragment().newInstance(url);
-        fullScreenImageFragment.show(getActivity().getSupportFragmentManager(),"full");
+       fullScreenImage(url);
     }
 
 
