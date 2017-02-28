@@ -4,6 +4,7 @@ package com.example.searchgoogle.ui.search;
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import com.example.searchgoogle.R;
 import com.example.searchgoogle.api.model.ImageModel;
 import com.example.searchgoogle.ui.BaseFragment;
+import com.example.searchgoogle.util.Network;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,9 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
     private SearchContract.Presenter presenter;
     private List<ImageModel> imageModels = new ArrayList<>();
     private RecyclerView recyclerView;
+    private int loaderId;
+    private SearchRvAdapter searchRvAdapter;
+    private LinearLayoutManager  layoutManager;
 
     public SearchFragment() {
     }
@@ -48,10 +53,35 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_search);
         presenter = new SearchPresenter(this);
+        initAdapter();
+
+        presenter.setOnScrollListener(recyclerView,layoutManager);
+
 
 
         return view;
+    }
+
+
+
+    @Override
+    public void addModel(List<ImageModel> list) {
+
+        for (ImageModel imageModel : list) {
+            if (imageModel.getPagemap()!= null) {
+                searchRvAdapter.add(imageModel);
+            }
+        }
+        searchRvAdapter.notifyDataSetChanged();
+    }
+
+    private void initAdapter() {
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        searchRvAdapter = new SearchRvAdapter(getActivity(),presenter);
+        recyclerView.setAdapter(searchRvAdapter);
     }
 
 
@@ -69,5 +99,15 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
 
         presenter.setOnQueryTextListener(searchView);
 
+    }
+
+    @Override
+    public boolean isOnline() {
+        if (!Network.isOnline(getActivity())){
+            Network.showErrorConnectDialog(getActivity());
+            return false;
+        }
+
+        return true;
     }
 }

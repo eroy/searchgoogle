@@ -1,5 +1,7 @@
 package com.example.searchgoogle.ui.search;
 
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 
 import com.example.searchgoogle.api.model.ImageModel;
@@ -9,9 +11,7 @@ import java.util.List;
 
 import rx.Observable;
 
-/**
- * Created by serj on 2/28/17.
- */
+
 
 public interface SearchContract {
     interface Model {
@@ -22,12 +22,14 @@ public interface SearchContract {
     interface View {
         void setImageModels(List<ImageModel> imageModels);
         List<ImageModel> getImageModels();
+        boolean isOnline();
+        void addModel(List<ImageModel> list);
     }
 
     interface Presenter {
-
+        void getImage(String query,int start);
         void setOnQueryTextListener(SearchView searchView);
-
+        void setOnScrollListener(RecyclerView recyclerView,LinearLayoutManager layoutManager);
     }
 
 

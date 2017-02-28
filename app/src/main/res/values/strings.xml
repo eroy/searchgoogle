@@ -3,4 +3,10 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="network_is_absent">The network is absent</string>
+    <string name="check_connection">Check your connection to the internet and retry</string>
+    <string name="cancel">Cancel</string>
+    <string name="retry">Retry</string>
+
 </resources>
