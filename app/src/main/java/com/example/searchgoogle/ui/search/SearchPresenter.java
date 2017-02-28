@@ -5,9 +5,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 
 import com.example.searchgoogle.constant.ApiConstant;
+import com.example.searchgoogle.model.DataModel;
 
 import rx.Observable;
 
@@ -23,6 +25,12 @@ public class SearchPresenter implements SearchContract.Presenter {
 
     }
 
+    @Override
+    public void onDestroy() {
+        model = null;
+        resetValues();
+
+    }
 
     @Override
     public void getImage(String query, int start) {
@@ -95,5 +103,20 @@ public class SearchPresenter implements SearchContract.Presenter {
     @Override
     public void setOnClickListenerImage(ImageView image,String url) {
         image.setOnClickListener(v -> view.gotToFullScreenImage(url));
+    }
+
+    @Override
+    public void setOnCheckedChangeListener(CheckBox checkBox, DataModel dataModel) {
+        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (buttonView.isChecked()){
+                model.insertData(dataModel);
+                Log.e("DATABASE", String.valueOf(model.getAllData().size()));
+            }
+            else {
+                model.removeData(dataModel);
+                Log.e("DATABASE", String.valueOf(model.getAllData().size()));
+
+            }
+        });
     }
 }

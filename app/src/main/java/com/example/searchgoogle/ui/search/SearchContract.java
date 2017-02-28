@@ -3,10 +3,12 @@ package com.example.searchgoogle.ui.search;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 
 import com.example.searchgoogle.api.model.ImageModel;
 import com.example.searchgoogle.api.response.ImageResponse;
+import com.example.searchgoogle.model.DataModel;
 
 import java.util.List;
 
@@ -18,6 +20,9 @@ public interface SearchContract {
     interface Model {
         Observable<ImageResponse> getImage(String query,int start);
 
+        void insertData(DataModel dataModel);
+        void removeData(DataModel dataModel);
+        List<DataModel> getAllData();
     }
 
     interface View {
@@ -34,6 +39,10 @@ public interface SearchContract {
         void setOnScrollListener(RecyclerView recyclerView,LinearLayoutManager layoutManager);
 
         void setOnClickListenerImage(ImageView image,String url);
+
+        void onDestroy();
+
+        void setOnCheckedChangeListener(CheckBox checkBox, DataModel dataModel);
     }
 
 

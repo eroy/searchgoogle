@@ -64,8 +64,8 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
 
     @Override
     public void onDestroy() {
+        presenter.onDestroy();
         super.onDestroy();
-
     }
 
     @Override
@@ -86,7 +86,7 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
     private void initAdapter() {
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        searchRvAdapter = new SearchRvAdapter(getActivity(),presenter);
+        searchRvAdapter = new SearchRvAdapter(presenter);
         recyclerView.setAdapter(searchRvAdapter);
     }
 
