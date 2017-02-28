@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.example.searchgoogle.constant.ApiConstant;
 
@@ -69,6 +70,7 @@ public class SearchPresenter implements SearchContract.Presenter {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                resetValues();
                 querySearch = query;
                 getImage(querySearch, ApiConstant.START + page);
 
@@ -82,5 +84,16 @@ public class SearchPresenter implements SearchContract.Presenter {
                 return false;
             }
         });
+    }
+
+    private void resetValues() {
+        view.clearList();
+        page = 0;
+        querySearch = null;
+    }
+
+    @Override
+    public void setOnClickListenerImage(ImageView image,String url) {
+        image.setOnClickListener(v -> view.gotToFullScreenImage(url));
     }
 }

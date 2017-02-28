@@ -4,6 +4,7 @@ package com.example.searchgoogle.ui.search;
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -17,31 +18,23 @@ import android.view.ViewGroup;
 import com.example.searchgoogle.R;
 import com.example.searchgoogle.api.model.ImageModel;
 import com.example.searchgoogle.ui.BaseFragment;
+import com.example.searchgoogle.ui.FullScreenImageFragment;
 import com.example.searchgoogle.util.Network;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SearchFragment extends BaseFragment implements SearchContract.View {
 
     private SearchContract.Presenter presenter;
-    private List<ImageModel> imageModels = new ArrayList<>();
+
     private RecyclerView recyclerView;
-    private int loaderId;
+
     private SearchRvAdapter searchRvAdapter;
     private LinearLayoutManager  layoutManager;
 
     public SearchFragment() {
     }
 
-    public List<ImageModel> getImageModels() {
-        return imageModels;
-    }
-
-    @Override
-    public void setImageModels(List<ImageModel> imageModels) {
-        this.imageModels = imageModels;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,17 +57,30 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
         return view;
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+    }
 
     @Override
     public void addModel(List<ImageModel> list) {
-
         for (ImageModel imageModel : list) {
             if (imageModel.getPagemap()!= null) {
                 searchRvAdapter.add(imageModel);
             }
         }
         searchRvAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void clearList() {
+        searchRvAdapter.clear();
     }
 
     private void initAdapter() {
@@ -110,4 +116,13 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
 
         return true;
     }
+
+    @Override
+    public void gotToFullScreenImage(String url) {
+        DialogFragment fullScreenImageFragment = new FullScreenImageFragment().newInstance(url);
+        fullScreenImageFragment.show(getActivity().getSupportFragmentManager(),"full");
+    }
+
+
+
 }

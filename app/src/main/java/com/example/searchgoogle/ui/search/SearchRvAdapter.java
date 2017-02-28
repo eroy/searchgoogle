@@ -11,10 +11,7 @@ import android.widget.TextView;
 
 import com.example.searchgoogle.R;
 import com.example.searchgoogle.api.model.ImageModel;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.example.searchgoogle.util.LoadImage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +32,10 @@ public class SearchRvAdapter extends RecyclerView.Adapter<SearchRvAdapter.ViewHo
         list.add(imageModel);
     }
 
+    public void clear() {
+        list.clear();
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -49,17 +50,12 @@ public class SearchRvAdapter extends RecyclerView.Adapter<SearchRvAdapter.ViewHo
 
         holder.mName.setText(imageModel.getTitle());
 
-        ImageLoader imageLoader = ImageLoader.getInstance();
-
-        imageLoader.init(ImageLoaderConfiguration.createDefault(context));
-        DisplayImageOptions options = new DisplayImageOptions.Builder()
-                .imageScaleType(ImageScaleType.IN_SAMPLE_INT)
-                .cacheInMemory()
-                .cacheOnDisc()
-                .build();
         if (list.get(position).getPagemap().getCseImage() != null) {
-            imageLoader.displayImage(list.get(position).getPagemap().getCseImage().get(0).getSrc(), holder.mImageView, options);
+            LoadImage.downloadImageToView(list.get(position).getPagemap().getCseImage().get(0).getSrc(), holder.mImageView);
+            mPresenter.setOnClickListenerImage(holder.mImageView,list.get(position).getPagemap().getCseImage().get(0).getSrc());
+
         }
+
     }
 
     @Override
